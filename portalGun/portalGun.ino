@@ -164,9 +164,9 @@ void loop() {
       digitalWrite(topBulbPin, LOW);
       //alpha4.writeDisplay();
       scroll(myStr);
-      delay(2500);
+      delay(500);
       alpha4.clear();
-      //alpha4.writeDisplay();
+      alpha4.writeDisplay();
       delay(2500);
       justWokeUp = true;
       goToSleep();
