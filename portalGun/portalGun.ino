@@ -39,6 +39,7 @@
 Adafruit_AlphaNum4 alpha4 = Adafruit_AlphaNum4();
 char displayBuffer[4];
 uint8_t dimensionLetter='C';
+uint8_t scrollSpeed=100;
 
 // Set up the click encoder
 ClickEncoder *encoder;
@@ -260,7 +261,26 @@ void updateDimension(){
 }
 
 
-
+void scroll(char* in, uint8_t speed=scrollSpeed, uint8_t displayLen=sizeof(displayBuffer)){
+  uint8_t i, dpos, tindex;
+  char charToPrint;
+  uint8_t inLen = strlen(in);
+  alpha4.clear(); // Clear the display
+  for (i=0; i < inLen + (displayLen * 2); i++){
+    for (dpos=0; dpos < displayLen; dpos++){
+      tindex = dpos + i;
+      if (tindex < displayLen || tindex >= (displayLen + inLen)) {
+        charToPrint = ' ';
+      } else {
+        charToPrint = in[tindex - displayLen];
+      }
+      //writeCharacter(charToPrint,dpos);//this is the command that write the char on screen
+      alpha4.writeDigitAscii(dpos, charToPrint);
+      alpha4.writeDisplay();
+    }
+    delay(speed);
+  }
+}
 
 
 /*
